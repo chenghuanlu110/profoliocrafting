@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Brand: Sapphire (identity), Ocean (interaction/light),
+ * Jade (rare, important highlights only). Neutrals are deep navy / near-black.
+ * Contrast: --color-fg on --color-ink-900 ≈ 15:1, --color-muted ≈ 7.6:1,
+ * --color-subtle ≈ 4.9:1 (AA for body text). Sapphire is never used for text.
+ */
+@theme {
+  --color-sapphire: #0042ac;
+  --color-sapphire-600: #0a52c8;
+  --color-ocean: #00d3fb;
+  --color-jade: #83fd80;
+
+  --color-ink-950: #04060c;
+  --color-ink-900: #070b16;
+  --color-ink-850: #0a1020;
+  --color-ink-800: #0e1629;
+  --color-ink-700: #152037;
+  --color-line: rgb(148 172 214 / 0.14);
+  --color-line-strong: rgb(148 172 214 / 0.26);
+
+  --color-fg: #e8eef8;
+  --color-muted: #a3b1c8;
+  --color-subtle: #7c8aa3;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-ink-950);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    /* No background here: the html background shows through, and the fixed
+       BackgroundField (z-index -10) must not be covered by body's paint. */
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: rgb(0 211 251 / 0.28);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ocean);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ocean);
+  }
+  .panel {
+    background: linear-gradient(180deg, rgb(14 22 41 / 0.72), rgb(10 16 32 / 0.72));
+    border: 1px solid var(--color-line);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(6px);
+  }
+  .placeholder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffd27a;
+    border: 1px dashed rgb(255 210 122 / 0.5);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    white-space: nowrap;
+  }
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, rgb(120 150 210 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(120 150 210 / 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 85%);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .prose-body {
+    color: var(--color-muted);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+  .prose-body strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+}
